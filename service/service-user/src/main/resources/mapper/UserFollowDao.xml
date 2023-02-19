@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.janty.dao.UserFollowDao">
+
+    <!-- 用于select查询公用抽取的列 -->
+    <sql id="columns">
+        select id, user_id, house_id, create_time, update_time, is_deleted
+        from db_shf.user_follow
+    </sql>
+
+    <insert id="insert">
+        insert into db_shf.user_follow(user_id, house_id)
+        values (#{userId}, #{houseId})
+    </insert>
+
+    <select id="getCountByUserIdAndHouseId" resultType="java.lang.Integer">
+        select count(id)
+        from db_shf.user_follow
+        where user_id = #{userId}
+            and house_id = #{houseId} and is_deleted = 0
+    </select>
+
+    <select id="findPageList" resultType="com.janty.vo.UserFollowVo">
+        select uf.id, uf.house_id, uf.create_time,hc.name communityName, hh.*
+        from user_follow uf
+                 left join hse_house hh
+                           on uf.house_id = hh.id
+                 left join hse_community hc
+                           on hh.community_id = hc.id
+        where uf.user_id = #{userId}
+          and uf.is_deleted = 0
+          and hh.is_deleted = 0
+          and hc.is_deleted = 0
+        order by uf.id desc
+    </select>
+
+    <update id="delete">
+        update db_shf.user_follow
+            set is_deleted = 1
+        where id = #{id}
+    </update>
+
+</mapper>
