@@ -37,4 +37,9 @@ public class BaseController {
 
         return filters;
     }
+
+
+    public void kkabum(){
+        System.out.println("这是随便写的方法");
+    }
 }
