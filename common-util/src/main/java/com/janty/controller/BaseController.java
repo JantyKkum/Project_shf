@@ -38,6 +38,10 @@ public class BaseController {
         return filters;
     }
 
+    public void jian(){
+        System.out.println("jian分支的方法");
+    }
+
 
     public void kkabum(){
         System.out.println("这是随便写的方法");
