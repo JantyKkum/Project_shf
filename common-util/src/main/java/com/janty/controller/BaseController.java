@@ -37,4 +37,8 @@ public class BaseController {
 
         return filters;
     }
+
+    public void jian(){
+        System.out.println("jian分支的方法");
+    }
 }
